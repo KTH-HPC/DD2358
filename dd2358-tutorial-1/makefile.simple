@@ -1,0 +1,45 @@
+# 1. define compilers
+CC = gcc
+
+# 2. define targets
+TARGET_EXEC = main.out
+TARGET_DIR  = bin
+BUILD_DIR   = obj
+
+# 3. define location of source code
+SRC_DIRS = src
+SRCS := $(shell find $(SRC_DIRS) -name *.c)
+
+# 4. define object targets using list of source code
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+
+# 5. define header location and turn into cc flags
+INC_DIRS = include
+INC_DIRS  := $(shell find $(INC_DIRS) -type d)
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+
+# 6. define location of libraries and link flags
+LIB_DIRS = /usr/lib64
+LIBS     = -lm
+
+# 7. consolidate Compile flags and Link flags
+CFLAGS  := $(INC_FLAGS) -Wall -g -O2
+LDFLAGS := $(addprefix -L,$(LIB_DIRS)) $(LIBS)
+
+# 8. define target of building object files
+$(BUILD_DIR)/%.c.o: %.c
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# 9. define target of building executable
+$(TARGET_DIR)/$(TARGET_EXEC): $(OBJS)
+	mkdir -p $(dir $@)
+	$(CC) $(OBJS) $(LDFLAGS) -o $@
+
+# 10. define phony targets for house keeping
+.PHONY: all clean
+
+all: $(TARGET_DIR)/$(TARGET_EXEC)
+
+clean:
+	rm -rf $(BUILD_DIR) $(TARGET_DIR)
