@@ -1,3 +1,5 @@
+cython_*.c
+
 # Prerequisites
 *.d
 

@@ -19,5 +19,6 @@ $(TARGET): $(DEPS)
 
 clean:
 	python setup.py clean
-	rm -r build *.so
+	rm -rf build *.so
+	rm cython_sum.c
 	rm -f $(DEPS) $(TARGET) *.mod
