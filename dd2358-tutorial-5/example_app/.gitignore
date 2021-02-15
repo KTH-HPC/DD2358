@@ -122,3 +122,4 @@ dkms.conf
 *.trs
 test_led
 test_color
+func_test
