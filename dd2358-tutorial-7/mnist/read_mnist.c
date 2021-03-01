@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
                 if (pixel > 0.5)
                     printf("* ");
                 else
-                    printf(". ");
+                    printf("  ");
             }
             printf("\n");
         }
